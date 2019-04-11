@@ -1,0 +1,18 @@
+{
+  "id": 117534423303,
+  "category": {
+    "id": 888,
+    "name": "MyTestPet"
+  },
+  "name": "RestApiPet",
+  "photoUrls": [
+    "https://s1.stc.all.kpcdn.net/putevoditel/projectid_103889/images/tild3037-3231-4134-a333-303139306331__-5.jpg"
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "Animals"
+    }
+  ],
+  "status": "available"
+}
