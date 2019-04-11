@@ -3,27 +3,10 @@ import json
 import jsonpath
 import pytest
 import requests
+from tests import test_base
 
 
 @pytest.mark.Smoke
-def test_get_pet_with_id():
-    url = "http://petstore.swagger.io/v2/pet/50833"
-    response = requests.get(url)
-    json_response = json.loads(response.text)
-
-    pretty_data = json.dumps(json_response, indent=1)
-
-    print(response)
-
-    category_name = jsonpath.jsonpath(json_response, 'category.name')
-    print(pretty_data)
-    name = category_name[0]
-    print(name)
-
-    assert name == 'string'
-    print(response)
-
-
 def test_get_pet():
     param = {'status': 'pending'}
 
@@ -51,10 +34,18 @@ def test_post_pet():
     file = open('C:\\Users\\mdyuzhev\\PycharmProjects\\Integation\\resources\\createPet.json', 'r')
     json_input = file.read()
     body = json.loads(json_input)
-    cat_name = jsonpath.jsonpath(body, 'category.name')
+    exp_name = jsonpath.jsonpath(body, 'category.name')[0]
+    cat_name = jsonpath.jsonpath(body, 'category.name')[0]
     request_json = json.loads(json_input)
 
     response = requests.post(url, data=json.dumps(request_json), headers=headers)
+    try:
+        assert cat_name == exp_name
+    except AssertionError as e:
+        message = e.args[0]
+        message += "\nСравнение прошло неуспешно"
+        e.args = (message,)  # wrap it up in new tuple
+        raise
     print(response)
 
 
@@ -108,4 +99,3 @@ def test_del_pet():
     url = "http://petstore.swagger.io/v2/pet/117534423303"
     response = requests.delete(url)
     print(response)
-
